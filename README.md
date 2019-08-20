@@ -1,14 +1,14 @@
 # 怎么发布一个docker image到cf应用
 
 
-[CF文档](https://docs.cloudfoundry.org/devguide/deploy-apps/push-docker.html#cf-ssh)
+先来过一下[CF文档](https://docs.cloudfoundry.org/devguide/deploy-apps/push-docker.html#cf-ssh)
 
 此处有2个关键信息需要我们注意
 
 1.  cf应用只会监听一个端口
 2.  cf应用会自动监听在dockerfile里EXPOSE的端口。根据测试，当EXPOSE了多个端口时，cf会默认监听第一个端口
 
-比如这个[Kong的Dockerfile](https://github.com/Kong/docker-kong/blob/9a6d1a06b2e768949fda9ae7b30b747437fe388c/alpine/Dockerfile)暴露了4个端口，8000 8443 8001 8444，这个dockerfile被发布成cf应用时，只会监听8000端口，然后我们需要的是api端口8443。所以我们需要改写这个Dockerfile。
+比如这个[Kong的Dockerfile](https://github.com/Kong/docker-kong/blob/9a6d1a06b2e768949fda9ae7b30b747437fe388c/alpine/Dockerfile)暴露了4个端口，8000 8443 8001 8444，这个dockerfile被发布成cf应用时，只会监听8000端口，然后我们需要的是api端口8001。所以我们需要改写这个Dockerfile。
 
 修改前
 ```
